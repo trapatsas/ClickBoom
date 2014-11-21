@@ -1,0 +1,55 @@
+<head>
+  <title>TestApp</title>
+</head>
+
+<body>
+<h1>Welcome to Meteor!</h1>
+{{#if currentUser}}
+  {{> dashboard}}
+{{else}}
+  {{> register}}
+  {{> login}}
+{{/if}}
+</body>
+
+<template name="dashboard">
+    <p>You're logged in.</p>
+    <p><a href="#" class="logout">Logout</a></p>
+    <div>
+        <ol>
+          {{#each directory}}
+              <li>{{username}}{{emails/[0].address}} ({{profile.color}})</li>
+          {{/each}}
+        </ol>
+    </div>
+    <p>Play here:</p>
+    {{> play}}
+</template>
+
+<template name="login">
+  <form id="login-form" action="action">
+    <div>
+      <input type="email" id="login-email" />
+      <input type="password" id="login-password" />
+      <input type="submit" id="login-button" value="Sign in" />
+    </div>
+  </form>
+</template>
+
+<template name="register">
+    <form id="register-form" action="action">
+        <div>
+            <input type="email" id="register-email" />
+            <input type="password" id="register-password" />
+            <input type="submit" id="create-account" value="Create an Account" />
+        </div>
+    </form>
+</template>
+
+<template name="play">
+    <svg id="playArea" width="500" height="500">
+      {{#each shapes}}
+          <circle r="10" fill="{{color}}" cx="{{cx}}" cy="{{cy}}"></circle>
+      {{/each}}
+    </svg>
+</template>
