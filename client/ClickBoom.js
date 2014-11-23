@@ -5,9 +5,7 @@ Meteor.subscribe("allusers");
 //  return 'Do you want to leave?';
 //});
 
-$(window).bind('unload', function() {
-    destroyUser();
-});
+
 
 var randomColor = function () {
     var ColorsList = Colors.find({isAvailable:true}).fetch();
@@ -34,6 +32,11 @@ var destroyUser = function () {
     Meteor.logout();
 };
 
+$(window).bind('unload', function() {
+    destroyUser();
+});
+
+
 Template.play.rendered = function () {
     var pointId;
     if(!Clicks.findOne({owner: Meteor.userId()})){
@@ -48,14 +51,8 @@ Template.play.rendered = function () {
         pointId = Clicks.findOne({owner: Meteor.userId()})._id;
     }
     var svg = document.getElementById('playArea');
-    var pt = svg.createSVGPoint();
-    function cursorPoint(evt){
-        pt.x = evt.clientX; pt.y = evt.clientY;
-        return pt.matrixTransform(svg.getScreenCTM().inverse());
-    }
     svg.addEventListener('click',function(evt){
-        var loc = cursorPoint(evt);
-        Clicks.update({_id: pointId}, {$set:{cx:loc.x, cy:loc.y}});
+        gameState.canvasClickHandler(evt, pointId);
     },false);
 };
 
@@ -75,7 +72,16 @@ Template.dashboard.events({
 
 Template.dashboard.helpers({
     directory: function () {
-        return Meteor.users.find();
+        return Meteor.users.find({}, {sort: {'profile.score': -1}});
+    },
+    curS: function () {
+        return Session.get('msg')
+    },
+    score: function () {
+        return Session.get('score');
+    },
+    hit: function () {
+        return Session.get('hit');
     }
 });
 
@@ -105,7 +111,8 @@ Template.register.events({
             password: passwordVar,
             profile: {
                 color: 'orange',
-                createdAt: new Date
+                createdAt: new Date,
+                score: 0
             }
         };
         Accounts.createUser( options , function(err){

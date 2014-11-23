@@ -18,11 +18,14 @@
     <div>
         <ol>
           {{#each directory}}
-              <li>{{username}}{{emails/[0].address}} ({{profile.color}})</li>
+              <li style="background-color: {{profile.color}}">{{username}}{{emails/[0].address}} ({{profile.color}}) : Score : {{profile.score}}</li>
           {{/each}}
         </ol>
     </div>
     <p>Play here:</p>
+    <p style="background-color: {{curS.col}}">{{curS.msg}}</p>
+
+    <p>{{hit}}</p>
     {{> play}}
 </template>
 
@@ -49,7 +52,7 @@
 <template name="play">
     <svg id="playArea" width="500" height="500">
       {{#each shapes}}
-          <circle r="10" fill="{{color}}" cx="{{cx}}" cy="{{cy}}"></circle>
+          <circle id="{{_id}}" r="10" fill="{{color}}" cx="{{cx}}" cy="{{cy}}"></circle>
       {{/each}}
     </svg>
 </template>
