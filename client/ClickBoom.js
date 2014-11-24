@@ -68,7 +68,8 @@ Template.dashboard.events({
         // code goes here
         destroyUser();
     },
-    'click .test': function(event){
+    'click #test': function(){
+        console.log('nice dude!');
         Meteor.call('peinaw');
     }
 });
