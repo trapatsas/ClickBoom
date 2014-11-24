@@ -7,6 +7,7 @@ var cursorPoint = function (evt){
     pt.x = evt.clientX; pt.y = evt.clientY;
     return pt.matrixTransform(svg.getScreenCTM().inverse());
 };
+
 var handleBoom = function (id) {
 
     var wounded = Meteor.users.findOne({_id: Clicks.findOne({_id: id}).owner});
@@ -20,6 +21,7 @@ var handleBoom = function (id) {
     }
 
 };
+
 var drawFuncs = {
     setShip: function(evt, pointId){
         var loc = cursorPoint(evt);
@@ -31,6 +33,7 @@ var drawFuncs = {
         }
     }
 };
+
 var messages = {
     setShip: {msg:'Place your ship', col: 'yellow'},
     setBomb: {msg:'Bomb someone!', col: 'green'}
@@ -53,3 +56,4 @@ gameState = {
     },
     canvasClickHandler: handler
 };
+

@@ -25,3 +25,8 @@ Accounts.onCreateUser(function(options, user) {
     user.profile = options.profile;
     return user;
 });
+Meteor.methods({
+    peinaw: function (){
+        console.log('peinaw from' + this.userId)
+    }
+});
