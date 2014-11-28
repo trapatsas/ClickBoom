@@ -3,7 +3,6 @@ Meteor.startup(function () {
     Colors.remove({});
     Clicks.remove({});
     Meteor.users.remove({});
-    Meteor.users.insert({})
 
     if(Colors.find().count() === 0) {
         ['red', 'brown', 'green', 'blue', 'orange'].forEach(function (c) {
